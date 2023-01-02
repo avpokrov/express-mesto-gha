@@ -1,21 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
 require('dotenv').config();
 
-const {PORT = 3000} = process.env;
+mongoose.set('strictQuery', false);
+
+const {
+  PORT = 3000,
+  MONGO_URL = 'mongodb://localhost:27017/mestodb',
+} = process.env;
+
 const app = express();
-console.log(PORT);
-// mongoose.connect('mongodb://localhost:27017/mestodb', {
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
-//   useFindAndModify: false
-// });
 
-const router = require('./router/index.js');
+async function connect() {
+  await mongoose.connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: false,
+  });
+  console.log(`Connect db  ${MONGO_URL}`);
 
-app.use(router);
-
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`)
-})
-
+  await app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+  });
+}
+connect();
