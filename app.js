@@ -10,7 +10,19 @@ const {
   MONGO_URL = 'mongodb://localhost:27017/mestodb',
 } = process.env;
 
+
 const app = express();
+
+app.use((req, res, next) => {
+  req.user = {
+    _id: '63b3f16946b08fac27b7fd9b'
+  };
+
+  next();
+}); 
+
+app.use(require('./router/index'));
+
 
 async function connect() {
   await mongoose.connect(MONGO_URL, {

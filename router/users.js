@@ -1,4 +1,5 @@
-const userRoutes = require('express').Router();
+const express = require('express');
+const userRoutes = express.Router();
 const {
   getUsers,
   getUserById,
@@ -7,6 +8,6 @@ const {
 
 userRoutes.get('/', getUsers);
 userRoutes.get('/:id', getUserById);
-userRoutes.post('/', createUser);
+userRoutes.post('/', express.json(), createUser);
 
 module.exports = userRoutes;
