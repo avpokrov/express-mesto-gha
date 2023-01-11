@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const {
   NOT_FOUND_CODE,
@@ -18,7 +19,21 @@ const getUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const {
+      email,
+      password,
+      name,
+      about,
+      avatar,
+    } = req.body;
+    const hashPass = bcrypt.hash(password, 10);
+    const user = await User.create({
+      password: hashPass,
+      email,
+      name,
+      about,
+      avatar,
+    });
     res.status(CREATED_CODE).send(user);
   } catch (err) {
     if (err.name === 'ValidationError') {
