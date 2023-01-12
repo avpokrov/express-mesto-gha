@@ -120,6 +120,13 @@ const updateUserAvatar = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { email, password} = await req.body;
+     
+  }
+};
+
 module.exports = {
-  getUsers, getUserById, createUser, updateUserProfile, updateUserAvatar,
+  getUsers, getUserById, createUser, updateUserProfile, updateUserAvatar, login,
 };
