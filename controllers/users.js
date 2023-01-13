@@ -1,10 +1,12 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const {
   NOT_FOUND_CODE,
   SERVER_ERROR_CODE,
   CREATED_CODE,
   ERROR_CODE,
+  ERROR_AUTH,
 } = require('../utils/statusError');
 const { errNotFound } = require('../utils/error');
 
@@ -14,29 +16,6 @@ const getUsers = async (req, res) => {
     res.send(users);
   } catch (err) {
     res.status(SERVER_ERROR_CODE).send({ message: 'На сервере произошла ошибка' });
-  }
-};
-
-const createUser = async (req, res) => {
-  try {
-    const {
-      password,
-    } = req.body;
-    const hashPass = await bcrypt.hash(password, 10);
-    const user = await User.create({
-      password: hashPass,
-      email: req.body.email,
-      name: req.body.name,
-      about: req.body.about,
-      avatar: req.body.avatar,
-    });
-    res.status(CREATED_CODE).send(user);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      res.status(ERROR_CODE).send({ message: 'Переданны не корректные данные', ...req.body });
-    } else {
-      res.status(SERVER_ERROR_CODE).send({ message: 'На сервере произошла ошибка' });
-    }
   }
 };
 
@@ -120,13 +99,6 @@ const updateUserAvatar = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
-  try {
-    const { email, password} = await req.body;
-     
-  }
-};
-
 module.exports = {
-  getUsers, getUserById, createUser, updateUserProfile, updateUserAvatar, login,
+  getUsers, getUserById, updateUserProfile, updateUserAvatar,
 };

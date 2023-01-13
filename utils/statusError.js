@@ -1,5 +1,6 @@
 const CREATED_CODE = 201;
 const ERROR_CODE = 400;
+const ERROR_AUTH = 401;
 const NOT_FOUND_CODE = 404;
 const SERVER_ERROR_CODE = 500;
 
@@ -8,4 +9,5 @@ module.exports = {
   SERVER_ERROR_CODE,
   CREATED_CODE,
   ERROR_CODE,
+  ERROR_AUTH,
 };

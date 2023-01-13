@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
@@ -11,6 +12,8 @@ const {
 } = process.env;
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   req.user = {
