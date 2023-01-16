@@ -5,7 +5,7 @@ const { JWT_SECRET, NODE_ENV } = process.env;
 function generateToken(payload) {
   return jwt.sign(
     payload,
-    'dev_secret',
+    NODE_ENV === 'production' ? JWT_SECRET : 'dev_secret',
     { expiresIn: '7d' },
   );
 }

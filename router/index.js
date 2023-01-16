@@ -1,8 +1,13 @@
-const router = require('express').Router();
+const express = require('express');
 
-router.use('/users', require('./users'));
-router.use('/cards', require('./cards'));
-router.use('/signup', require('./signup'));
-router.use('/signin', require('./signin'));
+const router = express.Router();
+const auth = require('../middlewares/auth');
+const { login, createUser } = require('../controllers/users');
+
+router.use('/users', auth, require('./users'));
+router.use('/cards', auth, require('./cards'));
+
+router.post('/signin', express.json(), login);
+router.post('/signup', express.json(), createUser);
 
 module.exports = router;

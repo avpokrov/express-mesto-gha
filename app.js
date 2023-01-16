@@ -14,16 +14,8 @@ const {
 const app = express();
 
 app.use(cookieParser());
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: '63b6fe61fab7dbff095c2781',
-  };
-
-  next();
-});
-
 app.use(require('./router/index'));
+app.use(require('./middlewares/error'));
 
 async function connect() {
   await mongoose.connect(MONGO_URL, {
